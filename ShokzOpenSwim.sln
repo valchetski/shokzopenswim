@@ -5,6 +5,10 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shokz", "src\Shokz\Shokz.csproj", "{946A6CC6-FD95-4F36-A81D-DC67E3EAAFBA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8ABE51B1-ED8C-4A97-9CCF-BDE5D523532D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shokz.Tests", "tests\Shokz.Tests\Shokz.Tests.csproj", "{EEDFC233-C751-4E1E-82E5-77EC99DD4AAD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,12 @@ Global
 		{946A6CC6-FD95-4F36-A81D-DC67E3EAAFBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{946A6CC6-FD95-4F36-A81D-DC67E3EAAFBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{946A6CC6-FD95-4F36-A81D-DC67E3EAAFBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEDFC233-C751-4E1E-82E5-77EC99DD4AAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEDFC233-C751-4E1E-82E5-77EC99DD4AAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEDFC233-C751-4E1E-82E5-77EC99DD4AAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEDFC233-C751-4E1E-82E5-77EC99DD4AAD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EEDFC233-C751-4E1E-82E5-77EC99DD4AAD} = {8ABE51B1-ED8C-4A97-9CCF-BDE5D523532D}
 	EndGlobalSection
 EndGlobal
