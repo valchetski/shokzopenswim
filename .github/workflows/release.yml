@@ -25,8 +25,6 @@ jobs:
       run: dotnet pack
 
     - name: Push
-      run: dotnet nuget push *.nupkg -k ${GITHUB_TOKEN} --no-symbols 
-      env:
-        NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
+      run: dotnet nuget push "**/*.nupkg" -k "${{ secrets.NUGET_TOKEN }}" --no-symbols 
 
 
