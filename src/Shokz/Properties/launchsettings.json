@@ -1,0 +1,11 @@
+{
+    "profiles": {
+        "Shokz": {
+            "commandName": "Project",
+            "commandLineArgs": "https://feeds.megaphone.fm/QCEOS5292368649  --output=Blackout",
+            "environmentVariables": {
+                "DOTNET_ENVIRONMENT": "Development"
+            }
+        }
+    }
+}

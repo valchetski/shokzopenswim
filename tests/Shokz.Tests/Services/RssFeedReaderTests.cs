@@ -11,7 +11,10 @@ public class RssFeedReaderTests
     {
         // arrange
         var downloadLocation = "Blackout";
-        Directory.Delete(downloadLocation);
+        if (Directory.Exists(downloadLocation))
+        {
+            Directory.Delete(downloadLocation, true);
+        }
 
         var loggerStub = new Mock<ILogger<RssFeedReader>>();
 
@@ -22,6 +25,6 @@ public class RssFeedReaderTests
 
         // assert
         await act.Should().NotThrowAsync();
-        Directory.Delete(downloadLocation);
+        Directory.Delete(downloadLocation, true);
     }
 }

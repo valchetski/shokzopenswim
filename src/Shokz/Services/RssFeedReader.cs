@@ -12,10 +12,12 @@ public class RssFeedReader(ILogger<RssFeedReader> logger) : IFeedReader
         var feed = await FeedReader.ReadAsync(url);
         logger.LogInformation("Got \"{FeedName}\" RSS feed info from \"{FeedUrl}\"", feed.Title, url);
 
-        logger.LogInformation("\"{FeedName}\" will be downloaded to \"{Location}\"", feed.Title, downloadLocation);
+        logger.LogInformation("\"{FeedName}\" will be downloaded to \"{Location}\" folder", feed.Title, downloadLocation);
         if (!Directory.Exists(downloadLocation))
         {
+            logger.LogInformation("Creating \"{Location}\" folder as it doesn't exist", downloadLocation);
             Directory.CreateDirectory(downloadLocation);
+            logger.LogInformation("Created \"{Location}\" folder as it doesn't exist", downloadLocation);
         }
 
         foreach (var item in feed.Items)
@@ -23,9 +25,12 @@ public class RssFeedReader(ILogger<RssFeedReader> logger) : IFeedReader
             if(item.SpecificItem is MediaRssFeedItem mediaItem)
             {
                 var downloadPath = Path.Combine(downloadLocation, $"{mediaItem.Title}.mp3");
+                logger.LogInformation("Downloading \"{File}\" to \"{Location}\"", mediaItem.Title, downloadPath);
                 await DownloadFileAsync(mediaItem.Enclosure.Url, downloadPath);
+                logger.LogInformation("Downloaded \"{File}\" to \"{Location}\"", mediaItem.Title, downloadPath);
             }
         }
+        logger.LogInformation("\"{FeedName}\" downloaded successfully to \"{Location}\" folder", feed.Title, downloadLocation);
     }
 
     private async Task DownloadFileAsync(string url, string filePath)
