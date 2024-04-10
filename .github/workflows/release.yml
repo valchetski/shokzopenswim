@@ -1,0 +1,32 @@
+name: release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest 
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Build
+      run: dotnet build
+
+    - name: Pack
+      run: dotnet pack
+
+    - name: Push
+      run: dotnet nuget push *.nupkg -k ${GITHUB_TOKEN} --no-symbols 
+      env:
+        NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
+
+
