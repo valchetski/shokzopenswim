@@ -1,5 +1,6 @@
 ﻿using System.CommandLine;
 using System.CommandLine.Invocation;
+using System.Runtime.InteropServices;
 
 namespace Shokz;
 
@@ -9,7 +10,7 @@ public class DownloadRssCommand : RootCommand
         : base("Download items from RSS feed")
     {
         AddArgument(new Argument<string>("url", "Url to the RSS feed."));
-        AddOption(new Option<string>("--output", "Path to download RSS feed items.")
+        AddOption(new Option<string>("--output", GetOutputDefaultValue, "Root path to download RSS feed items.")
         {
             IsRequired = true,
         });
@@ -30,5 +31,14 @@ public class DownloadRssCommand : RootCommand
             await feedReader.DownloadAsync(Url, Output);
             return 0;
         }
+    }
+
+    private string GetOutputDefaultValue()
+    {
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+        {
+            return "/Volumes/OpenSwim";
+        }
+        return string.Empty;
     }
 }

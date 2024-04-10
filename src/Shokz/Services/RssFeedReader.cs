@@ -12,6 +12,7 @@ public class RssFeedReader(ILogger<RssFeedReader> logger) : IFeedReader
         var feed = await FeedReader.ReadAsync(url);
         logger.LogInformation("Got \"{FeedName}\" RSS feed info from \"{FeedUrl}\"", feed.Title, url);
 
+        downloadLocation = Path.Combine(downloadLocation, feed.Title);
         logger.LogInformation("\"{FeedName}\" will be downloaded to \"{Location}\" folder", feed.Title, downloadLocation);
         if (!Directory.Exists(downloadLocation))
         {
