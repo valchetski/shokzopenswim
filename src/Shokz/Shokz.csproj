@@ -8,6 +8,7 @@
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>shokz</ToolCommandName>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
