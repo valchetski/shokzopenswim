@@ -21,17 +21,39 @@ public class RssFeedReader(ILogger<RssFeedReader> logger) : IFeedReader
             logger.LogInformation("Created \"{Location}\" folder as it doesn't exist", downloadLocation);
         }
 
-        foreach (var item in feed.Items)
+        int downloaded = feed.Items.Count;
+        foreach (var item in feed.Items.OrderBy(x => x.PublishingDate))
         {
-            if(item.SpecificItem is MediaRssFeedItem mediaItem)
+            switch(item.SpecificItem)
             {
-                var downloadPath = Path.Combine(downloadLocation, $"{mediaItem.Title}.mp3");
-                logger.LogInformation("Downloading \"{File}\" to \"{Location}\"", mediaItem.Title, downloadPath);
-                await DownloadFileAsync(mediaItem.Enclosure.Url, downloadPath);
-                logger.LogInformation("Downloaded \"{File}\" to \"{Location}\"", mediaItem.Title, downloadPath);
+                case MediaRssFeedItem mediaItem:
+                    await DownloadFeedFileAsync(mediaItem.Enclosure.Url, downloadLocation, mediaItem.Title);
+                    break;
+                case Rss20FeedItem rss20Item:
+                    await DownloadFeedFileAsync(rss20Item.Enclosure.Url, downloadLocation, rss20Item.Title);
+                    break;
+                default:
+                    downloaded--;
+                    logger.LogWarning("Skipping \"{File}\" download as \"{Type}\" type is not supported", item.Title, item.SpecificItem.GetType());
+                    break;
             }
         }
-        logger.LogInformation("\"{FeedName}\" downloaded successfully to \"{Location}\" folder", feed.Title, downloadLocation);
+        if (downloaded > 0)
+        {
+            logger.LogInformation("{Count}/{Total} assets from \"{FeedName}\" feed downloaded successfully to \"{Location}\" folder", downloaded, feed.Items.Count, feed.Title, downloadLocation);
+        }
+        else
+        {
+            logger.LogWarning("No assets from \"{FeedName}\" feed were downloaded", feed.Title);
+        }
+    }
+
+    private async Task DownloadFeedFileAsync(string url, string downloadLocation, string fileTitle)
+    {
+        var downloadPath = Path.Combine(downloadLocation, $"{fileTitle}.mp3");
+        logger.LogInformation("Downloading \"{File}\" to \"{Location}\"", fileTitle, downloadPath);
+        await DownloadFileAsync(url, downloadPath);
+        logger.LogInformation("Downloaded \"{File}\" to \"{Location}\"", fileTitle, downloadPath);
     }
 
     private async Task DownloadFileAsync(string url, string filePath)
