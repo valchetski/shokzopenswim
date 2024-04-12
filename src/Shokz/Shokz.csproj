@@ -8,7 +8,12 @@
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>shokz</ToolCommandName>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>1.1.0</Version>
+    <PackageIcon>icon.png</PackageIcon>
+    <Description>Download podcasts to Shokz OpenSwim in chronological order</Description>
+    <RepositoryUrl>https://github.com/valchetski/shokzopenswim</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>shokz openswim podcast download</PackageTags>
+    <Version>1.1.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,6 +26,7 @@
 
   <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\docs\icon.png" Pack="true" PackagePath="" />
     <Content Include="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

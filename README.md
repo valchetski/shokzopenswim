@@ -5,14 +5,20 @@ Tool to download Podcasts from RSS feed to Shokz OpenSwim headphones.
 It does the transmission of the files in a specific order as it is an important criterion for playback sequence on [OpenSwim](https://intl.help.shokz.com/s/article/How-to-list-the-track-order-on-OpenSwim-formerly-Xtrainerz-17).
 
 # Installation
-Install .Net tool:
+Install .NET tool:
 ```
-dotnet tool install --global Shokz
+dotnet tool install --global shokz
 ```
 
 Verify the installation:
 ```
 shokz --help
+```
+
+# Update
+Update .NET tool:
+```
+dotnet tool update --global shokz
 ```
 
 # Usage
