@@ -22,27 +22,33 @@ shokz --help
 # Commands
 ## shokz
 ```
-shokz [<URL>] [--output <OUTPUT>]
+shokz [<URI>] [-o|--output <OUTPUT>]
 ```
 ### Arguments
-- `URL`\
-URL to RSS feed with Podcast
+- `URI`\
+One of the values:
+    - URL to RSS feed with Podcast.
+    - Path to a local folder with downloaded Podcast.
 
 ### Options
-- `--output`\
+- `-o|--output`\
 Root path to download podcasts.\
 Default values:
     - Mac: `/Volumes/OpenSwim`
     - Other platforms: not specified
 
 ### Examples
-#### Without --output
+#### RSS feed without `-o|--output`
 ```
-shokz https://feeds.megaphone.fm/QCEOS5292368649
-```
-
-#### With --output
-```
-shokz https://feeds.megaphone.fm/QCEOS5292368649 --output /Volumes/OpenSwim/Podcasts
+shokz https://valchetski.github.io/shokzopenswim/samplerss.xml
 ```
 
+#### RSS feed with `-o|--output`
+```
+shokz https://valchetski.github.io/shokzopenswim/samplerss.xml -o /Volumes/OpenSwim/Podcasts
+```
+
+#### Local folder
+```
+shokz /Users/%yourusername%/Downloads/CoolPodcast
+```

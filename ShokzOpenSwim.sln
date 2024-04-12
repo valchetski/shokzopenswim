@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8ABE51B1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shokz.Tests", "tests\Shokz.Tests\Shokz.Tests.csproj", "{EEDFC233-C751-4E1E-82E5-77EC99DD4AAD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shokz.IntegrationTests", "tests\Shokz.IntegrationTests\Shokz.IntegrationTests.csproj", "{617C8E17-CE7A-48EE-8AC9-639F7317B1FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,8 +28,13 @@ Global
 		{EEDFC233-C751-4E1E-82E5-77EC99DD4AAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEDFC233-C751-4E1E-82E5-77EC99DD4AAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEDFC233-C751-4E1E-82E5-77EC99DD4AAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{617C8E17-CE7A-48EE-8AC9-639F7317B1FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{617C8E17-CE7A-48EE-8AC9-639F7317B1FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{617C8E17-CE7A-48EE-8AC9-639F7317B1FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{617C8E17-CE7A-48EE-8AC9-639F7317B1FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{EEDFC233-C751-4E1E-82E5-77EC99DD4AAD} = {8ABE51B1-ED8C-4A97-9CCF-BDE5D523532D}
+		{617C8E17-CE7A-48EE-8AC9-639F7317B1FA} = {8ABE51B1-ED8C-4A97-9CCF-BDE5D523532D}
 	EndGlobalSection
 EndGlobal

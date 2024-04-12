@@ -10,7 +10,7 @@ public class RssFeedReaderTests
     public async Task Download()
     {
         // arrange
-        var downloadLocation = "Blackout";
+        var downloadLocation = "Sample";
         if (Directory.Exists(downloadLocation))
         {
             Directory.Delete(downloadLocation, true);
@@ -21,7 +21,7 @@ public class RssFeedReaderTests
         var sut = new RssFeedReader(loggerStub.Object);
 
         // act
-        var act = async () => await sut.DownloadAsync("https://feeds.megaphone.fm/QCEOS5292368649", downloadLocation);
+        var act = async () => await sut.DownloadAsync("https://valchetski.github.io/shokzopenswim/samplerss.xml", downloadLocation);
 
         // assert
         await act.Should().NotThrowAsync();

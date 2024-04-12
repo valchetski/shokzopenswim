@@ -2,10 +2,15 @@
     "profiles": {
         "Shokz": {
             "commandName": "Project",
-            "commandLineArgs": "https://feeds.megaphone.fm/QCEOS5292368649",
-            "environmentVariables": {
-                "DOTNET_ENVIRONMENT": "Development"
-            }
+            "commandLineArgs": ""
+        },
+        "ShokzRss": {
+            "commandName": "Project",
+            "commandLineArgs": "https://valchetski.github.io/shokzopenswim/samplerss.xml"
+        },
+        "ShokzLocal": {
+            "commandName": "Project",
+            "commandLineArgs": "$(MSBuildProjectDirectory)/../../docs"
         }
     }
 }
