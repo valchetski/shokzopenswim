@@ -1,8 +1,6 @@
 ﻿using System.CommandLine;
 using System.CommandLine.Invocation;
-using System.CommandLine.IO;
 using System.Runtime.InteropServices;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Shokz;
@@ -21,7 +19,7 @@ public class DownloadCommand : RootCommand
         });
     }
 
-    public new class Handler(IServiceProvider services, ILogger<Handler> logger) : ICommandHandler
+    public new class Handler(IFeedProcessor feedProcessor, ILogger<Handler> logger) : ICommandHandler
     {
         public string? Uri { get; set; }
         public string? Output { get; set; }
@@ -35,31 +33,26 @@ public class DownloadCommand : RootCommand
         {
             if (Uri == null)
             {
-                throw new InvalidOperationException($"\"{nameof(Uri)}\" cannot be null");
+                logger.LogError("\"{Uri)}\" cannot be null", nameof(Uri));
+                return 1;
             }
 
             if (Output == null)
             {
-                throw new InvalidOperationException($"\"{nameof(Output)}\" cannot be null");
-            }
-
-            IFeedReader? feedReader = Uri switch
-            {
-                string when System.Uri.TryCreate(Uri, UriKind.Absolute, out Uri? uriResult) 
-                    && (uriResult.Scheme == System.Uri.UriSchemeHttp || uriResult.Scheme == System.Uri.UriSchemeHttps) 
-                    => services.GetRequiredService<RssFeedReader>(),
-                string when Path.Exists(Uri) => services.GetRequiredService<LocalFeedReader>(),
-                _ => null
-            };
-
-            if (feedReader == null)
-            {
-                logger.LogError("No feed found at \"{Uri}\".", Uri);
+                logger.LogError("\"{Output)}\" cannot be null", nameof(Output));
                 return 1;
             }
-
-            await feedReader.DownloadAsync(Uri, Output);
-            return 0;
+            
+            try
+            {
+                await feedProcessor.DownloadAsync(Uri, Output);
+                return 0;
+            }
+            catch(FeedException ex)
+            {
+                logger.LogError(ex.Message);
+                return 1;
+            }
         }
     }
 

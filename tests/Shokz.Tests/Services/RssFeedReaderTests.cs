@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Moq;
 
@@ -16,9 +17,12 @@ public class RssFeedReaderTests
             Directory.Delete(downloadLocation, true);
         }
 
-        var loggerStub = new Mock<ILogger<RssFeedReader>>();
+        var services = new ServiceCollection()
+            .AddFeedServices()
+            .AddLogging()
+            .BuildServiceProvider();
 
-        var sut = new RssFeedReader(loggerStub.Object);
+        var sut = services.GetRequiredService<IFeedProcessor>();
 
         // act
         var act = async () => await sut.DownloadAsync("https://valchetski.github.io/shokzopenswim/samplerss.xml", downloadLocation);

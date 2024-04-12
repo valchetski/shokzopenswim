@@ -23,12 +23,19 @@ public static class CommandLine
                     .AddCommandLineLogger())
                 .ConfigureServices((_, services) =>
                 {
-                    services
-                        .AddSingleton<RssFeedReader>()
-                        .AddSingleton<LocalFeedReader>();
+                    services.AddFeedServices();
                     servicesOverride?.Invoke(services);
                 })
                 .UseCommandHandler<DownloadCommand, DownloadCommand.Handler>())
                 .UseDefaults().Build();    
+    }
+
+    public static IServiceCollection AddFeedServices(this IServiceCollection services)
+    {
+        return services
+            .AddSingleton<IFeedDownloader, FeedDownloader>()
+            .AddSingleton<RssFeedReader>()
+            .AddSingleton<LocalFeedReader>()
+            .AddSingleton<IFeedProcessor, FeedProcessor>();
     }
 }

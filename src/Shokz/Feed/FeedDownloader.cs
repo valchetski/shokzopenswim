@@ -1,17 +1,10 @@
-﻿
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 
 namespace Shokz;
 
-public abstract class CommonFeedReader(ILogger logger) : IFeedReader
+public class FeedDownloader(ILogger<FeedDownloader> logger) : IFeedDownloader
 {
-    public async Task DownloadAsync(string uri, string downloadLocation)
-    {
-        var feed = await GetFeedAsync(uri);
-        await DownloadAsync(feed, downloadLocation);
-    }
-
-    protected async Task DownloadAsync(Feed feed, string downloadLocation)
+    public async Task DownloadAsync(Feed feed, string downloadLocation)
     {
         downloadLocation = Path.Combine(downloadLocation, feed.Title);
         logger.LogInformation("\"{FeedName}\" will be downloaded to \"{Location}\" folder", feed.Title, downloadLocation);
@@ -26,7 +19,16 @@ public abstract class CommonFeedReader(ILogger logger) : IFeedReader
         {
             var downloadPath = Path.Combine(downloadLocation, item.Title);
             logger.LogInformation("Downloading \"{File}\" to \"{Location}\"", item.Title, downloadPath);
-            await DownloadFileAsync(item.Uri, downloadPath);
+            switch(UriUtil.GetUriType(item.Uri))
+            {
+                case UriType.Http:
+                    await DownloadFileFromWebAsync(item.Uri, downloadPath);
+                    break;
+                case UriType.Local:
+                    File.Copy(item.Uri, downloadPath, true);
+                    break;
+            }
+
             logger.LogInformation("Downloaded \"{File}\" to \"{Location}\"", item.Title, downloadPath);
         }
 
@@ -40,7 +42,11 @@ public abstract class CommonFeedReader(ILogger logger) : IFeedReader
         }
     }
 
-    protected abstract Task<Feed> GetFeedAsync(string uri);
-
-    protected abstract Task DownloadFileAsync(string uri, string filePath);
+    private async Task DownloadFileFromWebAsync(string uri, string filePath)
+    {
+        using var client = new HttpClient();
+        using var s = await client.GetStreamAsync(uri);
+        using var fs = new FileStream(filePath, FileMode.OpenOrCreate);
+        await s.CopyToAsync(fs);
+    }
 }

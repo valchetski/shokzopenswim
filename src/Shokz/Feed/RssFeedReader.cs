@@ -1,12 +1,13 @@
-﻿using CodeHollow.FeedReader;
+﻿
+using CodeHollow.FeedReader;
 using CodeHollow.FeedReader.Feeds;
 using Microsoft.Extensions.Logging;
 
 namespace Shokz;
 
-public class RssFeedReader(ILogger<RssFeedReader> logger) : CommonFeedReader(logger)
+public class RssFeedReader(ILogger<RssFeedReader> logger) : IFeedReader
 {
-    protected override async Task<Feed> GetFeedAsync(string uri)
+    public async Task<Feed> GetFeedAsync(string uri)
     {
         logger.LogInformation("Getting RSS feed info from \"{FeedUrl}\"", uri);
         var rssFeed = await FeedReader.ReadAsync(uri);
@@ -28,14 +29,7 @@ public class RssFeedReader(ILogger<RssFeedReader> logger) : CommonFeedReader(log
                     break;
             }
         }
+        
         return new Feed(rssFeed.Title, feedItems, rssFeed.Items.Count);
-    }
-
-    protected override async Task DownloadFileAsync(string uri, string filePath)
-    {
-        using var client = new HttpClient();
-        using var s = await client.GetStreamAsync(uri);
-        using var fs = new FileStream(filePath, FileMode.OpenOrCreate);
-        await s.CopyToAsync(fs);
     }
 }
