@@ -4,7 +4,7 @@ namespace Shokz;
 
 public class FeedDownloader(ILogger<FeedDownloader> logger) : IFeedDownloader
 {
-    public async Task DownloadAsync(Feed feed, string downloadLocation)
+    public async Task<string[]> DownloadAsync(Feed feed, string downloadLocation)
     {
         downloadLocation = Path.Combine(downloadLocation, feed.Title);
         logger.LogInformation("\"{FeedName}\" will be downloaded to \"{Location}\" folder", feed.Title, downloadLocation);
@@ -15,6 +15,7 @@ public class FeedDownloader(ILogger<FeedDownloader> logger) : IFeedDownloader
             logger.LogInformation("Created \"{Location}\" folder", downloadLocation);
         }
 
+        var downloadedFiles = new List<string>();
         foreach (var item in feed.Items)
         {
             var downloadPath = Path.Combine(downloadLocation, item.Title);
@@ -29,6 +30,7 @@ public class FeedDownloader(ILogger<FeedDownloader> logger) : IFeedDownloader
                     break;
             }
 
+            downloadedFiles.Add(downloadPath);
             logger.LogInformation("Downloaded \"{File}\" to \"{Location}\"", item.Title, downloadPath);
         }
 
@@ -40,6 +42,8 @@ public class FeedDownloader(ILogger<FeedDownloader> logger) : IFeedDownloader
         {
             logger.LogWarning("No assets from \"{FeedName}\" feed were downloaded", feed.Title);
         }
+
+        return [.. downloadedFiles];
     }
 
     private async Task DownloadFileFromWebAsync(string uri, string filePath)

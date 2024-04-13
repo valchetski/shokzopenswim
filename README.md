@@ -4,6 +4,15 @@
 Tool to download Podcasts from RSS feed to Shokz OpenSwim headphones.
 It does the transmission of the files in a specific order as it is an important criterion for playback sequence on [OpenSwim](https://intl.help.shokz.com/s/article/How-to-list-the-track-order-on-OpenSwim-formerly-Xtrainerz-17).
 
+# Prerequisites
+Need only if you want to use [--split](#shokz) option.
+
+Install `ffmpeg`:
+- On Mac:
+    ```
+    brew install ffmpeg
+    ```
+
 # Installation
 Install .NET tool:
 ```
@@ -28,7 +37,7 @@ dotnet tool update --global shokz
 # Commands
 ## shokz
 ```
-shokz [<URI>] [-o|--output <OUTPUT>]
+shokz [<URI>] [-o|--output <OUTPUT>] [-s|--split <DURATION>]
 ```
 ### Arguments
 - `URI`\
@@ -42,6 +51,11 @@ Root path to download podcasts.\
 Default values:
     - Mac: `/Volumes/OpenSwim`
     - Other platforms: not specified
+- `-s|--split`\
+Duration of the split chunks.\
+Duration type is controlled by the value suffix:
+    - `m`, no suffix: minutes will be used. For example: `30m` and `30` will be parsed as 30 minutes.
+    - `s`: seconds will be used. For example: `30s` will be parsed as 30 seconds.
 
 ### Examples
 #### RSS feed without `-o|--output`
@@ -57,4 +71,9 @@ shokz https://valchetski.github.io/shokzopenswim/samplerss.xml -o /Volumes/OpenS
 #### Local folder
 ```
 shokz /Users/%yourusername%/Downloads/CoolPodcast
+```
+
+#### Local folder split into 30-minute chunks
+```
+shokz /Users/%yourusername%/Downloads/CoolPodcast -s 30
 ```

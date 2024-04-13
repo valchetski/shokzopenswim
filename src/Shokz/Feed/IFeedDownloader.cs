@@ -2,5 +2,5 @@
 
 public interface IFeedDownloader
 {
-    Task DownloadAsync(Feed feed, string downloadLocation);
+    Task<string[]> DownloadAsync(Feed feed, string downloadLocation);
 }

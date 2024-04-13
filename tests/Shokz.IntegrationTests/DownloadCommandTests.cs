@@ -71,6 +71,28 @@ public class DownloadCommandTests
         result.Should().Be(0, _console.Error.ToString());
     }
 
+    [Fact]
+    public async Task CorrectLocalFolder_ShouldDownloadAndSplit()
+    {
+        // arrange
+        var localFolder = "TestsInfrastructure/Feed";
+        var files = Directory.GetFiles(localFolder);
+        var outputFolder = "samplelocalsplitted";
+
+        // act
+        var result = await InvokeAsync(localFolder, $"-o={outputFolder}", "-s=30s");
+
+        // assert
+        result.Should().Be(0, _console.Error.ToString());
+        var outputFiles = Directory.GetFiles(outputFolder, "*.*", SearchOption.AllDirectories);
+        foreach (var file in files)
+        {
+            var firstChunkFileName = Path.GetFileNameWithoutExtension(file) + "_001" + Path.GetExtension(file);
+            outputFiles.Should().Contain(x => x.EndsWith(firstChunkFileName));
+            outputFiles.Should().NotContain(x => x.EndsWith(Path.GetFileName(file)));
+        }
+    }
+
     private Task<int> InvokeAsync(params string[] args)
     {
         return _parser.InvokeAsync(args, _console);

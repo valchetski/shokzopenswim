@@ -13,7 +13,7 @@
     <RepositoryUrl>https://github.com/valchetski/shokzopenswim</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>shokz openswim podcast download</PackageTags>
-    <Version>1.1.1</Version>
+    <Version>1.2.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

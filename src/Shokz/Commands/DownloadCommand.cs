@@ -17,12 +17,14 @@ public class DownloadCommand : RootCommand
         {
             IsRequired = true,
         });
+        AddOption(new Option<string>(["--split", "-s"], "Duration of splitted file part."));
     }
 
     public new class Handler(IFeedProcessor feedProcessor, ILogger<Handler> logger) : ICommandHandler
     {
         public string? Uri { get; set; }
         public string? Output { get; set; }
+        public string? Split { get; set; }
 
         public int Invoke(InvocationContext context)
         {
@@ -45,7 +47,7 @@ public class DownloadCommand : RootCommand
             
             try
             {
-                await feedProcessor.DownloadAsync(Uri, Output);
+                await feedProcessor.DownloadAsync(Uri, Output, Split);
                 return 0;
             }
             catch(FeedException ex)

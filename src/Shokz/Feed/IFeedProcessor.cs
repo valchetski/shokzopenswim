@@ -2,5 +2,5 @@
 
 public interface IFeedProcessor
 {
-    Task DownloadAsync(string uri, string downloadLocation);
+    Task DownloadAsync(string uri, string downloadLocation, string? splitDuration = null);
 }

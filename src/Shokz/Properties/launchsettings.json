@@ -11,6 +11,10 @@
         "ShokzLocal": {
             "commandName": "Project",
             "commandLineArgs": "$(MSBuildProjectDirectory)/../../docs"
+        },
+        "ShokzLocalSplit": {
+            "commandName": "Project",
+            "commandLineArgs": "$(MSBuildProjectDirectory)/../../docs -s 30s"
         }
     }
 }
