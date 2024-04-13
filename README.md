@@ -30,6 +30,11 @@ Update .NET tool:
 dotnet tool update --global shokz
 ```
 
+Check version:
+```
+shokz --version
+```
+
 # Usage
 1. Make sure you plug in your OpenSwim headphones to your machine via USB.
 2. Run the [shokz](#shokz) command in the terminal with parameters to download Podcast to OpenSwim.
